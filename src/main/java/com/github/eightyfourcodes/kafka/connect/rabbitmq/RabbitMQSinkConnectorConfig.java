@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package com.github.jcustenborder.kafka.connect.rabbitmq;
+package com.github.eightyfourcodes.kafka.connect.rabbitmq;
 
 import java.util.Map;
 
 import org.apache.kafka.common.config.ConfigDef;
-
-import com.github.jcustenborder.kafka.connect.utils.template.StructTemplate;
 
 public class RabbitMQSinkConnectorConfig extends RabbitMQConnectorConfig {
   static final String KAFKA_TOPIC_TEMPLATE = "kafkaTopicTemplate";
@@ -37,15 +35,13 @@ public class RabbitMQSinkConnectorConfig extends RabbitMQConnectorConfig {
 
   //TODO: include other config variables here
 
-  public final StructTemplate kafkaTopic;
+  public final String kafkaTopic;
   public final String exchange;
   public final String routingKey;
 
   public RabbitMQSinkConnectorConfig(Map<String, String> settings) {
     super(config(), settings);
-    final String kafkaTopicFormat = this.getString(TOPIC_CONF);
-    this.kafkaTopic = new StructTemplate();
-    this.kafkaTopic.addTemplate(KAFKA_TOPIC_TEMPLATE, kafkaTopicFormat);
+    this.kafkaTopic = this.getString(TOPIC_CONF);
     this.exchange = this.getString(EXCHANGE_CONF);
     this.routingKey = this.getString(ROUTING_KEY_CONF);
   }

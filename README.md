@@ -1,17 +1,13 @@
-
 # Introduction
 
-# Source Connectors
+## Development
+
+`mvn clean package`
 
 
 ## RabbitMQSourceConnector
 
 Connector is used to read from a RabbitMQ Queue or Topic.
-
-
-
-
-
 
 ### Configuration
 
@@ -481,7 +477,7 @@ post the configuration to one the distributed connect worker(s).
   "name" : "Connector1",
   "connector.class" : "org.apache.kafka.some.SourceConnector",
   "transforms" : "tran",
-  "transforms.tran.type" : "com.github.jcustenborder.kafka.connect.rabbitmq.ExtractHeader$Key",
+  "transforms.tran.type" : ExtractHeader,
   "transforms.tran.header.name" : "< Required Configuration >"
 }
 ```

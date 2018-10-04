@@ -13,34 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.jcustenborder.kafka.connect.rabbitmq;
+package com.github.eightyfourcodes.kafka.connect.rabbitmq;
 
-import com.github.jcustenborder.kafka.connect.utils.config.ConfigKeyBuilder;
 import org.apache.kafka.common.config.AbstractConfig;
 import org.apache.kafka.common.config.ConfigDef;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class ExtractHeaderConfig extends AbstractConfig {
 
   public final String headerName;
+  public final String envelopeName;
 
   public ExtractHeaderConfig(Map<?, ?> originals) {
     super(config(), originals);
     this.headerName = getString(HEADER_NAME_CONF);
+    this.envelopeName = getString(ENVELOPE_NAME_CONF);
   }
 
   public static final String HEADER_NAME_CONF = "header.name";
   public static final String HEADER_NAME_DOC = "Header name.";
 
+  public static final String ENVELOPE_NAME_CONF = "envelope.name";
+  public static final String ENVELOPE_NAME_DOC = "Envelope name.";
+
   public static ConfigDef config() {
-    return new ConfigDef()
-        .define(
-            ConfigKeyBuilder.of(HEADER_NAME_CONF, ConfigDef.Type.STRING)
-                .importance(ConfigDef.Importance.HIGH)
-                .documentation(HEADER_NAME_DOC)
-                .build()
-        );
+    List<String> dependents = Collections.emptyList();
+    ConfigDef.ConfigKey header = new ConfigDef.ConfigKey(HEADER_NAME_CONF, ConfigDef.Type.STRING, "", null, ConfigDef.Importance.HIGH, HEADER_NAME_DOC, "", -1, ConfigDef.Width.NONE, HEADER_NAME_CONF, dependents, null, true);
+    ConfigDef.ConfigKey envelope = new ConfigDef.ConfigKey(ENVELOPE_NAME_CONF, ConfigDef.Type.STRING, "", null, ConfigDef.Importance.HIGH, ENVELOPE_NAME_DOC, "", -1, ConfigDef.Width.NONE, ENVELOPE_NAME_CONF, dependents, null, true);
+    return new ConfigDef().define(header).define(envelope);
   }
 
 }
